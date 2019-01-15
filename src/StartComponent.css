@@ -1,0 +1,38 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
+.start_design_container{
+    display: block;
+    flex: 1;
+    background-color: salmon;
+    font-size: 25px;
+    text-align:center;
+
+}
+.start_design_title{
+    padding: 2em 3em 0.5em 3em;
+}
+.new_design_container{
+    display: inline-block;
+}
+.new_design_button:hover i{
+    animation: plus-rotate .2s ease-in 1;
+}
+.new_design_button{
+    background-color: blue;
+    font-size: 2em;
+    display: block;
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    padding: 0em;
+
+}
+.choose_option_container{
+    flex-flow: row wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+@keyframes plus-rotate{
+    0% { transform: rotate(0deg)}
+    100% { transform: rotate(-90deg)}
+}

@@ -1,0 +1,12 @@
+
+.container{
+    display: flex;
+    flex-direction: column;
+}
+.content_container{
+    background-color: black;
+    color: white;
+    font-size: 30;
+    font-weight: bold;
+    text-align: center;
+}

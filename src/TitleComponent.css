@@ -1,0 +1,12 @@
+@import "https://fonts.googleapis.com/css?family=Staatliches";
+.title_container{
+    font-size: 40px;
+    background-color: rgb(35, 110, 35);
+    padding: 1em;
+    text-align: center;
+}
+.title_text{
+    font-family: 'Staatliches', cursive;
+    text-shadow: -2px 2px red;
+    user-select: none;
+}
