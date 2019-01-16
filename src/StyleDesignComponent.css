@@ -1,0 +1,32 @@
+.style_design_container{
+    font-size: 25px;
+    background-color: salmon;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+    font-family: "Staatliches", cursive;
+}
+.design_table{
+    display: table;
+    background-color: rgb(196, 96, 84);
+    padding: 1em;
+    border-radius: .5em;
+    margin-top: 1em;
+}
+.design_row{
+    display: table-row;
+}
+.design_cell{
+    display: table-cell;
+    padding: .5em;
+    border: 1px solid rgba(0,0,0,.3);
+    cursor: pointer;
+    transition: all .2s linear;
+}
+.design_cell:hover{
+    background-color: rgb(221, 106, 94);
+}
+.style_design_title{
+    user-select: none;
+}
