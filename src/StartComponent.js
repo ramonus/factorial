@@ -60,7 +60,7 @@ class Step1Component extends Component{
 class CreateNewDesignComponent extends Component{
     _onClickHandler = () => {
         if(this.props.onClick){
-            this.props.onClick();
+            setTimeout(this.props.onClick,200);
         }
     }
     render(){

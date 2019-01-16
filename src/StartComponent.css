@@ -46,6 +46,9 @@
 .new_design_button:hover i{
     animation: plus-rotate .2s ease-in 1;
 }
+.new_design_button:active i{
+    animation: plus-rotate-full .2s ease-in 1;
+}
 .choose_option_container{
     flex-flow: row wrap;
     align-content: center;
@@ -73,4 +76,8 @@
 @keyframes plus-rotate{
     0% { transform: rotate(0deg)}
     100% { transform: rotate(-90deg)}
+}
+@keyframes plus-rotate-full{
+    0% {transform: rotateZ(0deg);}
+    100% {transform: rotateZ(-360deg);}
 }
