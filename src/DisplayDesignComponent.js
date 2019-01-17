@@ -7,10 +7,11 @@ export default class DisplayDesignComponent extends Component{
         this.state = {
             options: this.props.options,
             factors: this.props.factors,
-        }
+        };
     }
+    
     _generate_content = () => {
-        cons coef = this.state.factors-Math.log(this.state.options.runs)/Math.log(2);
+        const coef = this.state.factors-Math.log(this.state.options.runs)/Math.log(2);
         const nruns = this.state.options.runs;
         let content = [];
         for(let i=0;i<nruns;i++){

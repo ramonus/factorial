@@ -33,6 +33,7 @@ export default class StartComponent extends Component{
                 break;
             case 3:
                 comp = (<DisplayDesignComponent factors={this.state.factors} options={this.state.designStyle} />);
+                break;
             default:
                 comp = (<Step1Component onClick={this._new_design_onClick_handler.bind(this)} />);
                 break;
