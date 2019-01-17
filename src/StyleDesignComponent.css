@@ -7,8 +7,12 @@
     padding: 2em;
     font-family: "Staatliches", cursive;
 }
+.style_design_title{
+    text-align: center;
+}
 .design_table{
     display: table;
+    table-layout: fixed;
     background-color: rgb(196, 96, 84);
     padding: 1em;
     border-radius: .5em;
@@ -16,16 +20,26 @@
 }
 .design_row{
     display: table-row;
+    cursor: pointer;
+    transition: all .2s linear;
 }
 .design_cell{
     display: table-cell;
     padding: .5em;
     border: 1px solid rgba(0,0,0,.3);
-    cursor: pointer;
-    transition: all .2s linear;
+    width: 5em;
+    text-align: center;
 }
-.design_cell:hover{
+.design_row:not(:first-child):hover{
     background-color: rgb(221, 106, 94);
+}
+.design_row:first-child{
+    cursor: default;
+    text-decoration: underline;
+    font-style: italic;
+}
+.design_cell:nth-child(2){
+    font-style: italic;
 }
 .style_design_title{
     user-select: none;

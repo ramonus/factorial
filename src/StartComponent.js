@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "./StartComponent.css";
 import ButtonComponent from "./ButtonComponents";
 import StyleDesignComponent from './StyleDesignComponent';
+import DisplayDesignComponent from "./DisplayDesignComponent";
 
 export default class StartComponent extends Component{
     constructor(props){
@@ -9,6 +10,7 @@ export default class StartComponent extends Component{
         this.state = {
             step: 0,
             factors: 0,
+            designStyle: null,
         };
     }
     _new_design_onClick_handler = () => {
@@ -17,6 +19,9 @@ export default class StartComponent extends Component{
     _number_factors_select_handler = (factors) => {
         this.setState({factors,step: 2});
     }
+    _style_design_select_handler = (designStyle) => {
+        this.setState({designStyle,step: 3});
+    }
     render(){
         let comp = null;
         switch(this.state.step){
@@ -24,8 +29,10 @@ export default class StartComponent extends Component{
                 comp = (<NumberFactorComponent onClick={this._number_factors_select_handler.bind(this)}/>);
                 break;
             case 2:
-                comp = (<StyleDesignComponent factors={this.state.factors}/>);
+                comp = (<StyleDesignComponent factors={this.state.factors} onClick={this._style_design_select_handler.bind(this)}/>);
                 break;
+            case 3:
+                comp = (<DisplayDesignComponent factors={this.state.factors} options={this.state.designStyle} />);
             default:
                 comp = (<Step1Component onClick={this._new_design_onClick_handler.bind(this)} />);
                 break;
@@ -60,7 +67,7 @@ class Step1Component extends Component{
 class CreateNewDesignComponent extends Component{
     _onClickHandler = () => {
         if(this.props.onClick){
-            setTimeout(this.props.onClick,200);
+            this.props.onClick();
         }
     }
     render(){
@@ -95,7 +102,7 @@ class NumberFactorComponent extends Component{
                     How many factors does your design need?
                 </div>
                 <div className="number_factor_chooser">
-                    Factors: <input type="number" className="number_factor_spinner" min="2" max="10" step="1"
+                    Factors: <input type="number" className="number_factor_spinner" min="2" max="15" step="1"
                         value={this.state.factors}
                         onChange={(e) => this.setState({factors: e.target.value})} />
                 </div>

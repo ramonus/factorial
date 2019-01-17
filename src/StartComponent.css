@@ -15,7 +15,7 @@
     user-select: none;
 }
 .new_design_container{
-    display: block
+    display: block;
 }
 .new_design_button{
     display: flex;
@@ -78,6 +78,6 @@
     100% { transform: rotate(-90deg)}
 }
 @keyframes plus-rotate-full{
-    0% {transform: rotateZ(0deg);}
+    0% {transform: rotateZ( 0deg);}
     100% {transform: rotateZ(-360deg);}
 }
