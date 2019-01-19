@@ -32,6 +32,7 @@
     border-radius: 0.05em;
     transition: .2s ease-in-out all;
     color: orange;
+    text-decoration: none;
 }
 .new_design_button:hover{
     background-color:red;

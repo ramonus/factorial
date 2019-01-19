@@ -11,7 +11,6 @@ export default class DisplayDesignComponent extends Component{
             factorNames: {},
         };
     }
-    
     _generate_content = () => {
         const sample = (n) => {
             let r = [];
@@ -28,8 +27,8 @@ export default class DisplayDesignComponent extends Component{
         let content = [];
         for(let i=0;i<nruns;i++){
             let cells = [];
+            cells.push(<div className="display_design_cell">{i+1}</div>);
             for(let j=0;j<this.state.factors-this.state.coef;j++){
-                
                 let s = sample(2**j);
                 let next = s[i%s.length];
                 cells.push(<div className="display_design_cell">{next}</div>);
@@ -44,9 +43,9 @@ export default class DisplayDesignComponent extends Component{
         return content;
     }
     _generate_header = () => {
-        let content = [];
+        let content = [<div className="display_design_cell names">Run</div>];
         for(let i=0;i<this.state.factors-this.state.coef;i++){
-            let vname = this.state.factorNames[i]?this.state.factorNames[i]:i;
+            let vname = this.state.factorNames[i]?this.state.factorNames[i]:words[i];
             content.push(
                 <div className="display_design_cell names">{vname}</div>
             );
@@ -63,7 +62,8 @@ export default class DisplayDesignComponent extends Component{
         return(
             <div className="display_design_container">
             <div className="display_design_title">
-            Design
+            Design<br/>
+            2^({this.state.factors}-{this.state.coef})
             </div>
             <div className="display_design_table">
                 {header}
@@ -73,3 +73,4 @@ export default class DisplayDesignComponent extends Component{
         );
     }
 }
+const words = "ABCDEFG";

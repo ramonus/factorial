@@ -3,6 +3,7 @@ import "./StartComponent.css";
 import ButtonComponent from "./ButtonComponents";
 import StyleDesignComponent from './StyleDesignComponent';
 import DisplayDesignComponent from "./DisplayDesignComponent";
+import { Link } from 'react-router-dom';
 
 export default class StartComponent extends Component{
     constructor(props){
@@ -45,12 +46,7 @@ export default class StartComponent extends Component{
         );
     }
 }
-class Step1Component extends Component{
-    _onClickHandler = () => {
-        if(this.props.onClick){
-            this.props.onClick();
-        }
-    }
+export class Step1Component extends Component{
     render(){
         return(
             <div className="start_design_container">
@@ -59,36 +55,32 @@ class Step1Component extends Component{
                 </div>
                 <div className="choose_option_container">
                     <CreateNewDesignComponent 
-                        onClick={this._onClickHandler.bind(this)}/>
+                        route={"/factors"}/>
                 </div>
             </div>
         );
     }
 }
-class CreateNewDesignComponent extends Component{
-    _onClickHandler = () => {
-        if(this.props.onClick){
-            this.props.onClick();
-        }
-    }
+export class CreateNewDesignComponent extends Component{
     render(){
         return(
             <div className="new_design_container">
-                <div 
-                    className="new_design_button"
-                    onClick={this._onClickHandler.bind(this)}>
-                    <i className="fa fa-plus"></i>
-                </div>
+                <Link to={this.props.route} style={{ textDecoration: 'none' }}>
+                    <div 
+                        className="new_design_button">
+                        <i className="fa fa-plus"></i>
+                    </div>
+                </Link>
             </div>
         );
     }
 }
-class NumberFactorComponent extends Component{
+export class NumberFactorComponent extends Component{
     constructor(props){
         super(props);
 
         this.state = {
-            factors: 2,
+            factors: 7,
         };
     }
     _onChooseHandler = () => {

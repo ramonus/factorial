@@ -3,7 +3,7 @@ import "./StyleDesignComponent.css";
 import { available_designs } from './core';
 
 
-export default class SelectDesignStyleComponent extends Component{
+export default class StyleDesignComponent extends Component{
     constructor(props){
         super(props);
         this.state = {
