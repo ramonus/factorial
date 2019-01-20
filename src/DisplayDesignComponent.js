@@ -16,7 +16,7 @@ export default class DisplayDesignComponent extends Component{
             options: this.props.options||{runs:0,resolution:"full"},
             factors: this.props.factors||0,
             coef: coef||0,
-            factorNames: {},
+            factorNames: {A: {name: "Temp",low: 25, high: 30}},
         };
     }
     componentDidMount(){
@@ -42,6 +42,13 @@ export default class DisplayDesignComponent extends Component{
             for(let j=0;j<this.state.factors-this.state.coef;j++){
                 let s = sample(2**j);
                 let next = s[i%s.length];
+                if(this.state.factorNames[words[j]]){
+                    if(next==-1){
+                        next = this.state.factorNames[words[j]].low;
+                    }else if(next==1){
+                        next = this.state.factorNames[words[j]].high;
+                    }
+                }
                 cells.push(<div key={j+1}className="display_design_cell">{next}</div>);
             }
             let fin = (
@@ -56,7 +63,7 @@ export default class DisplayDesignComponent extends Component{
     _generate_header = () => {
         let content = [<div key={0}className="display_design_cell names">Run</div>];
         for(let i=0;i<this.state.factors-this.state.coef;i++){
-            let vname = this.state.factorNames[i]?this.state.factorNames[i]:words[i];
+            let vname = this.state.factorNames[words[i]]?this.state.factorNames[words[i]].name:words[i];
             content.push(
                 <div key={i+1}className="display_design_cell names">{vname}</div>
             );

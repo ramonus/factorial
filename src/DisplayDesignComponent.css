@@ -23,7 +23,7 @@
     display: table-row;
     transition: all .2s linear;
 }
-.display_design_row:not(:first-child):hover div{
+.display_design_row:not(:first-child):hover{
     background-color: whitesmoke;
     cursor: pointer;
 }
