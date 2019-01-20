@@ -4,18 +4,28 @@
     align-items: center;
     background-color: salmon;
     font-size: 25px;
+    font-family: "Staatliches", cursive;
 }
 .display_design_title{
     font-family: "Staatliches", cursive;
+    text-align: center;
+    user-select: none;
 }
 .display_design_table{
     display: table;
     table-layout: fixed;
     border: 1px solid black;
     padding: 1em;
+    background-color: rgb(224, 140, 140);
+    border-radius:1em;
 }
 .display_design_row{
     display: table-row;
+    transition: all .2s linear;
+}
+.display_design_row:not(:first-child):hover div{
+    background-color: whitesmoke;
+    cursor: pointer;
 }
 .names{
     background-color:rgba(104, 42, 35, .4);
