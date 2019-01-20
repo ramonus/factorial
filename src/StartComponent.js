@@ -84,9 +84,17 @@ export class NumberFactorComponent extends Component{
         };
     }
     _onChooseHandler = () => {
-        if(this.props.onClick){
-            this.props.onClick(this.state.factors);
+        let fac = this.state.factors;
+        if(fac>15){
+            fac = 15;
+        }else if(fac<2){
+            fac = 2;
         }
+        this.setState({factors: fac}, () => {    
+            if(this.props.onClick){
+                this.props.onClick(this.state.factors);
+            }
+        });
     }
     render(){
         return(

@@ -8,6 +8,8 @@
 }
 .display_design_title{
     font-family: "Staatliches", cursive;
+    text-align: center;
+    user-select: none;
 }
 .display_design_table{
     display: table;
@@ -19,6 +21,7 @@
 }
 .display_design_row{
     display: table-row;
+    transition: all .2s linear;
 }
 .display_design_row:not(:first-child):hover div{
     background-color: whitesmoke;
