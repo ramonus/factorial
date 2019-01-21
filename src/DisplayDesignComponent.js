@@ -5,10 +5,7 @@ import "./DisplayDesignComponent.css";
 export default class DisplayDesignComponent extends Component{
     constructor(props){
         super(props);
-        let coef = null;
-        if(props.options&props.factors){
-            coef = this.props.factors-Math.log(this.props.options.runs)/Math.log(2);
-        }
+        let coef = (this.props.factors||0)-Math.log(this.props.options?this.props.options.runs:0)/Math.log(2);
         if(!this.props.options|!this.props.factors){
             history.replace("/");
         }
