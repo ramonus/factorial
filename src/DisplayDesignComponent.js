@@ -31,11 +31,27 @@ export default class DisplayDesignComponent extends Component{
             return r;
         }
         const nruns = this.state.options.runs;
-        const cfactors = this.state.factors-this.state.coef;
         let content = [];
+        let available_order = [];
+        for(let i=1;i<=nruns;i++){
+            available_order.push(i);
+        }
         for(let i=0;i<nruns;i++){
             let cells = [];
             cells.push(<div key={0}className="display_design_cell">{i+1}</div>);
+            if(this.state.options.randomize){
+                let ord = null, itg = null;
+                while(!ord){
+                    itg = Math.floor(Math.random()*available_order.length);
+                    ord = available_order[itg];
+                }                
+                console.log("Length_avaliable:",available_order.length)
+                console.log("Index choosen:",itg)
+                console.log("Order_choosen:",ord);
+                cells.push(<div key={-1} className="display_design_cell">{ord}</div>);
+                delete available_order[itg];
+                console.log("Available after deletion:",available_order);
+            }
             for(let j=0;j<this.state.factors-this.state.coef;j++){
                 let s = sample(2**j);
                 let next = s[i%s.length];
@@ -59,10 +75,13 @@ export default class DisplayDesignComponent extends Component{
     }
     _generate_header = () => {
         let content = [<div key={0}className="display_design_cell names">Run</div>];
+        if(this.state.options.randomize){
+            content.push(<div key={-1} className="display_design_cell names">Order</div>);
+        }
         for(let i=0;i<this.state.factors-this.state.coef;i++){
             let vname = this.state.factorNames[words[i]]?this.state.factorNames[words[i]].name:words[i];
             content.push(
-                <div key={i+1}className="display_design_cell names">{vname}</div>
+                <div key={i+1} data-tooltip={"Factor "+words[i]} data-tooltip-position="top" className="display_design_cell names">{vname}</div>
             );
         }
         return (

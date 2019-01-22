@@ -46,7 +46,8 @@ export default class MainComponent extends Component{
                         <Route exact path="/display" render={(props) => (
                             <DisplayDesignComponent 
                             factors={this.state.factors}
-                            options={this.state.options}/>
+                            options={this.state.options}
+                            randomize={this.state.randomize}/>
                         )} />
                     </Switch>
                 </Router>

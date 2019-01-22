@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "./StyleDesignComponent.css";
+import CheckboxComponent from './CheckboxComponent';
 import { available_designs } from './core';
 
 
@@ -8,10 +9,14 @@ export default class StyleDesignComponent extends Component{
         super(props);
         this.state = {
             factors: this.props.factors,
+            randomize: false,
         }
     }
     _onRowClickHandler = (obj) => {
         if(this.props.onClick){
+            if(this.state.randomize){
+                obj.randomize = true;
+            }
             this.props.onClick(obj);
         }
     }
@@ -27,6 +32,9 @@ export default class StyleDesignComponent extends Component{
             k++;
         });
         return table;
+    }
+    _randomizeRunsHandler = (checked) => {
+        this.setState({randomize: checked});
     }
     render(){
         let table_content = this.generate_table_content();
@@ -48,6 +56,9 @@ export default class StyleDesignComponent extends Component{
                     </div>
                     {table_content}
                 </div>
+                <CheckboxComponent 
+                onChange={this._randomizeRunsHandler.bind(this)}
+                text="Randomize runs" />
             </div>
         );
     }
