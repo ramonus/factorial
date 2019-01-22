@@ -17,3 +17,26 @@ export const available_designs = {
     14: [f(16,"III"),f(32,"IV"),f(64,"IV"),f(128,"IV")],
     15: [f(16,"III"),f(32,"IV"),f(64,"IV"),f(128,"IV")],
 };
+export function getDesignData(factors,options){
+    let data = [];
+    const sample = (n) => {
+        let r = [];
+        for(let i=0;i<n;i++){
+            r.push(-1);
+        }
+        for(let i=0;i<n;i++){
+            r.push(1);
+        }
+        return r;
+    }
+    const nruns = options.nruns;
+    for(let i=0;i<nruns;i++){
+        let obj = {n:i};
+        for(let j=0;j<this.state.factors-this.state.coef;j++){
+            let s = sample(2**j);
+            let next = s[i%s.length];
+            obj[words[j]]=next;
+        }
+    }
+}
+const words = "ABCDEFGHIJKLMNOPQRST";

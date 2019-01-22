@@ -44,13 +44,9 @@ export default class DisplayDesignComponent extends Component{
                 while(!ord){
                     itg = Math.floor(Math.random()*available_order.length);
                     ord = available_order[itg];
-                }                
-                console.log("Length_avaliable:",available_order.length)
-                console.log("Index choosen:",itg)
-                console.log("Order_choosen:",ord);
+                }
                 cells.push(<div key={-1} className="display_design_cell">{ord}</div>);
                 delete available_order[itg];
-                console.log("Available after deletion:",available_order);
             }
             for(let j=0;j<this.state.factors-this.state.coef;j++){
                 let s = sample(2**j);
@@ -107,4 +103,4 @@ export default class DisplayDesignComponent extends Component{
         );
     }
 }
-const words = "ABCDEFG";
+const words = "ABCDEFGHIJKLMNOPQRST";

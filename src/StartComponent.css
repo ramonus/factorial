@@ -17,6 +17,13 @@
 .new_design_container{
     display: block;
 }
+.new_design_container::after{
+    font-family: 'FontAwesome';
+    content: '\f044';
+    width: 20em;
+    height: 20em;
+
+}
 .new_design_button{
     display: flex;
     position: relative;
