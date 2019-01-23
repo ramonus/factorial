@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import history from './history';
+import EditComponent from './EditComponent';
 import "./DisplayDesignComponent.css";
 
 export default class DisplayDesignComponent extends Component{
@@ -14,6 +15,7 @@ export default class DisplayDesignComponent extends Component{
             factors: this.props.factors||0,
             coef: coef||0,
             factorNames: {A: {name: "Temp",low: 25, high: 30}},
+            edit_factor: null,
         };
     }
     componentDidMount(){
@@ -77,7 +79,13 @@ export default class DisplayDesignComponent extends Component{
         for(let i=0;i<this.state.factors-this.state.coef;i++){
             let vname = this.state.factorNames[words[i]]?this.state.factorNames[words[i]].name:words[i];
             content.push(
-                <div key={i+1} data-tooltip={"Factor "+words[i]} data-tooltip-position="top" className="display_design_cell names">{vname}</div>
+                <div key={i+1}
+                    className="display_design_cell names"
+                    data-tooltip="Click to edit factor"
+                    onClick={this._editFactorHandler.bind(this,i)}
+                    data-tooltip-position="top">
+                    {vname}
+                </div>
             );
         }
         return (
@@ -86,19 +94,42 @@ export default class DisplayDesignComponent extends Component{
             </div>
         );
     }
+    _saveFactorEditHandler = (factor,finfo) => {
+        console.log("Recived:",factor,finfo);
+        let nobj = this.state.factorNames;
+        nobj[factor] = finfo;
+        this.setState({factorNames: nobj,edit_factor: null});
+    }
+    _editFactorHandler = (fi) => {
+        this.setState({edit_factor:fi+1});
+    }
     render(){
         let table_content = this._generate_content();
         let header = this._generate_header();
+        let editcomponent = null;
+        if(this.state.edit_factor){
+            editcomponent = (
+                <EditComponent factor={words[this.state.edit_factor-1]}
+                    finfo={this.state.factorNames[words[this.state.edit_factor-1]]}
+                    onClick={this._saveFactorEditHandler.bind(this)} 
+                    onCancel={() => {
+                        console.log("Cancelling");
+                        this.setState({edit_factor: null});
+                        
+                }}/>
+            );
+        }
         return(
             <div className="display_design_container">
-            <div className="display_design_title">
-            Design<br/>
-            2^{this.state.coef!=0?"("+this.state.factors+"-"+this.state.coef+")":this.state.factors}
-            </div>
-            <div className="display_design_table">
-                {header}
-                {table_content}
-            </div>
+                {editcomponent}
+                <div className="display_design_title">
+                    Design<br/>
+                    2^{this.state.coef!=0?"("+this.state.factors+"-"+this.state.coef+")":this.state.factors}
+                </div>
+                <div className="display_design_table">
+                    {header}
+                    {table_content}
+                </div>
             </div>
         );
     }

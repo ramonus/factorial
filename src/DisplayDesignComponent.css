@@ -30,6 +30,9 @@
 .names{
     background-color:rgba(104, 42, 35, .4);
 }
+.names:not(:first-child){
+    cursor: pointer;
+}
 .display_design_cell{
     display: table-cell;
     text-align: center;

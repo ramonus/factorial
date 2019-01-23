@@ -1,0 +1,6 @@
+.editbox_container{
+    background-color: lightgreen;
+    text-align: center;
+    width: 100%;
+    transition: all 0.3s linear;
+}
