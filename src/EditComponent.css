@@ -1,6 +1,27 @@
 .editbox_container{
     background-color: lightgreen;
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    align-items: center;
     width: 100%;
     transition: all 0.3s linear;
+}
+.editbox_text{
+    margin-top: 1em;
+}
+.edit_levels_container{
+    display: flex;
+    flex-direction: row;
+}
+.edit_levels_container div{
+    display: block;
+    padding: .3em;
+}
+.editbox_content input[type="text"]{
+    width: 100%;
+    text-align: center;
+    font-size: .8em;
+    padding: .5em .5em;
+    font-family: "Staatliches", cursive;
 }
