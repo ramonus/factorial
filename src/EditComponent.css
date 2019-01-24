@@ -19,9 +19,26 @@
     padding: .3em;
 }
 .editbox_content input[type="text"]{
-    width: 100%;
+    width: 90%;
     text-align: center;
     font-size: .8em;
     padding: .5em .5em;
     font-family: "Staatliches", cursive;
+    border-radius: 4px;
+    border: 1px solid silver;
+    transition: all .2s linear;
+    outline: none;
+    background-color: transparent;
+    color: gray;
+    cursor: pointer;
+}
+.editbox_content input[type="text"]:hover{
+    border-width: 2px;
+}
+.editbox_content input[type="text"]:focus{
+    border-width: 2px;
+    border-color: rgb(39, 153, 24);
+    background-color: whitesmoke;
+    color: black;
+    cursor: text;
 }

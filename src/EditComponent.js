@@ -6,19 +6,18 @@ export default class EditComponent extends Component{
     constructor(props){
         super(props);
         
-        let factor, finfo, visible = this.props;
+        let {factor, finfo} = this.props;
         this.state = {
             factor: factor||"Default",
-            finfo: finfo||{name:props.factor,low:-1,high:1},
-            visible,
+            name: finfo.name||"Default",
+            high: finfo.high||1,
+            low: finfo.low||-1,
         };
     }
     _onSaveHandler = () => {
-        this.setState({visible:"false"},() => {
-            if(this.props.onClick){
-                this.props.onClick(this.state.factor,this.state.finfo);
-            }
-        });
+        if(this.props.onClick){
+            this.props.onClick(this.state.factor,{name: this.state.name, low: this.state.low, high: this.state.high});
+        }
     }
     _onCancelHandler = () => {
         if(this.props.onCancel){
@@ -30,7 +29,9 @@ export default class EditComponent extends Component{
         if(nextProps.factor!==prevState.factor){
             return {
                 factor: nextProps.factor,
-                finfo: nextProps.finfo,
+                name: nextProps.finfo.name,
+                low: nextProps.finfo.low,
+                high: nextProps.finfo.high,
             };
         }else{
             return null;
@@ -46,11 +47,10 @@ export default class EditComponent extends Component{
                     <input 
                         type="text" 
                         onChange={(e) => {
-                            let nobj = this.state.finfo;
-                            nobj.name = e.target.value;
-                            this.setState({finfo:nobj});
-                        }} 
-                        value={this.state.finfo?this.state.finfo.name:"Default"}/>
+                            this.setState({name:e.target.value});
+                        }}
+                        onKeyPress={(e) => e.key==='Enter'?this._onSaveHandler():null}
+                        value={this.state.name}/>
                     <div className="edit_levels_container">
                     <div>
                         <div className="editbox_text">
@@ -59,11 +59,10 @@ export default class EditComponent extends Component{
                         <input
                             type="text"
                             onChange={(e) => {
-                                let nobj = this.state.finfo;
-                                nobj.low = e.target.value;
-                                this.setState({finfo: nobj});
+                                this.setState({low: e.target.value});
                             }}
-                            value={this.state.finfo?this.state.finfo.low:-1} />
+                            onKeyPress={(e) => e.key==='Enter'?this._onSaveHandler():null}
+                            value={this.state.low} />
                     </div>
                     <div>
                         <div className="editbox_text">
@@ -72,11 +71,10 @@ export default class EditComponent extends Component{
                         <input
                             type="text"
                             onChange={(e) => {
-                                let nobj = this.state.finfo;
-                                nobj.high = e.target.value;
-                                this.setState({finfo: nobj});
+                                this.setState({high: e.target.value});
                             }}
-                            value={this.state.finfo?this.state.finfo.high:1} />
+                            onKeyPress={(e) => e.key==='Enter'?this._onSaveHandler():null}
+                            value={this.state.high} />
                     </div>
                     </div>
                     <ButtonComponent value="Cancel" onClick={this._onCancelHandler.bind(this)} />

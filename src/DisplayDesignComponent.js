@@ -14,7 +14,7 @@ export default class DisplayDesignComponent extends Component{
             options: this.props.options||{runs:0,resolution:"full"},
             factors: this.props.factors||0,
             coef: coef||0,
-            factorNames: {A: {name: "Temp",low: 25, high: 30}},
+            factorNames: {},
             edit_factor: null,
         };
     }
@@ -110,7 +110,7 @@ export default class DisplayDesignComponent extends Component{
         if(this.state.edit_factor){
             editcomponent = (
                 <EditComponent factor={words[this.state.edit_factor-1]}
-                    finfo={this.state.factorNames[words[this.state.edit_factor-1]]}
+                    finfo={this.state.factorNames[words[this.state.edit_factor-1]]||{name: words[this.state.edit_factor-1],low:-1,high:1}}
                     onClick={this._saveFactorEditHandler.bind(this)} 
                     onCancel={() => {
                         console.log("Cancelling");
