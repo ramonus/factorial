@@ -39,3 +39,9 @@
     border: 1px solid black;
     width: 5em;
 }
+.response_cell{
+    cursor: text;
+}
+.response_cell:focus{
+    background-color: white;
+}

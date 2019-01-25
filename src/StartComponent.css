@@ -17,7 +17,7 @@
 .new_design_container{
     display: block;
 }
-.new_design_container::after{
+.icononcontent::after{
     font-family: 'FontAwesome';
     content: '\f044';
     width: 20em;

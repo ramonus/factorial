@@ -62,6 +62,14 @@ export default class DisplayDesignComponent extends Component{
                 }
                 cells.push(<div key={j+1}className="display_design_cell">{next}</div>);
             }
+            cells.push(
+                <div key={this.state.factors-this.state.coef+1}
+                    className="display_design_cell response_cell"
+                    contentEditable={true}
+                    onChange={(e) => console.log(e.target.value)}
+                    >
+                </div>
+            );
             let fin = (
                 <div key={i}className="display_design_row">
                 {cells}
@@ -88,6 +96,11 @@ export default class DisplayDesignComponent extends Component{
                 </div>
             );
         }
+        content.push(
+            <div key={-2} className="display_design_cell names">
+                Response
+            </div>
+        );
         return (
             <div className="display_design_row">
                 {content}
