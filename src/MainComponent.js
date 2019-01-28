@@ -6,7 +6,8 @@ import { Step1Component, NumberFactorComponent } from './StartComponent';
 import StyleDesignComponent from './StyleDesignComponent';
 import DisplayDesignComponent from './DisplayDesignComponent';
 import history from './history';
-import './MainComponent.css'
+import { getDesignData } from './core';
+import './MainComponent.css';
 
 export default class MainComponent extends Component{
     constructor(props){
@@ -45,9 +46,9 @@ export default class MainComponent extends Component{
                             )} />
                         <Route exact path="/display" render={(props) => (
                             <DisplayDesignComponent 
-                            factors={this.state.factors}
-                            options={this.state.options}
-                            randomize={this.state.randomize}/>
+                                factors={this.state.factors}
+                                options={this.state.options}
+                                randomize={this.state.randomize}/>
                         )} />
                     </Switch>
                 </Router>

@@ -17,7 +17,7 @@ export const available_designs = {
     14: [f(16,"III"),f(32,"IV"),f(64,"IV"),f(128,"IV")],
     15: [f(16,"III"),f(32,"IV"),f(64,"IV"),f(128,"IV")],
 };
-export function getDesignData(factors,options){
+export var getDesignData = (factors,options) => {
     let data = [];
     const sample = (n) => {
         let r = [];
@@ -38,6 +38,8 @@ export function getDesignData(factors,options){
             let next = s[i%s.length];
             obj[words[j]]=next;
         }
+        data.push(obj);
     }
+    return data;
 }
 const words = "ABCDEFGHIJKLMNOPQRST";

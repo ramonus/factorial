@@ -14,7 +14,7 @@ export default class DisplayDesignComponent extends Component{
             options: this.props.options||{runs:0,resolution:"full"},
             factors: this.props.factors||0,
             coef: coef||0,
-            factorNames: {},
+            factorNames: {A: {name: "Temp",low: 25, high: 30}},
             edit_factor: null,
         };
     }
@@ -62,14 +62,6 @@ export default class DisplayDesignComponent extends Component{
                 }
                 cells.push(<div key={j+1}className="display_design_cell">{next}</div>);
             }
-            cells.push(
-                <div key={this.state.factors-this.state.coef+1}
-                    className="display_design_cell response_cell"
-                    contentEditable={true}
-                    onChange={(e) => console.log(e.target.value)}
-                    >
-                </div>
-            );
             let fin = (
                 <div key={i}className="display_design_row">
                 {cells}
@@ -96,11 +88,6 @@ export default class DisplayDesignComponent extends Component{
                 </div>
             );
         }
-        content.push(
-            <div key={-2} className="display_design_cell names">
-                Response
-            </div>
-        );
         return (
             <div className="display_design_row">
                 {content}
@@ -122,11 +109,11 @@ export default class DisplayDesignComponent extends Component{
         let editcomponent = null;
         if(this.state.edit_factor){
             editcomponent = (
-                <EditComponent factor={words[this.state.edit_factor-1]}
-                    finfo={this.state.factorNames[words[this.state.edit_factor-1]]||{name: words[this.state.edit_factor-1],low:-1,high:1}}
+                <EditComponent 
+                    factor={words[this.state.edit_factor-1]}
+                    finfo={this.state.factorNames[words[this.state.edit_factor-1]]}
                     onClick={this._saveFactorEditHandler.bind(this)} 
                     onCancel={() => {
-                        console.log("Cancelling");
                         this.setState({edit_factor: null});
                         
                 }}/>
