@@ -30,9 +30,10 @@ export function getDesignData(factors,options){
         return r;
     }
     const nruns = options.nruns;
+    let coef = factors-Math.log(nruns)/Math.log(2);
     for(let i=0;i<nruns;i++){
         let obj = {n:i};
-        for(let j=0;j<this.state.factors-this.state.coef;j++){
+        for(let j=0;j<factors-coef;j++){
             let s = sample(2**j);
             let next = s[i%s.length];
             obj[words[j]]=next;
