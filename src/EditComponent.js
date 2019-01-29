@@ -5,13 +5,12 @@ import './EditComponent.css';
 export default class EditComponent extends Component{
     constructor(props){
         super(props);
-        
         let {factor, finfo} = this.props;
         this.state = {
             factor: factor||"Default",
-            name: finfo.name||"Default",
-            high: finfo.high||1,
-            low: finfo.low||-1,
+            name: finfo?finfo.name:factor||"Default",
+            high: finfo?finfo.high:1,
+            low: finfo?finfo.low:-1,
         };
     }
     _onSaveHandler = () => {

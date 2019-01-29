@@ -30,7 +30,7 @@
 .names{
     background-color:rgba(104, 42, 35, .4);
 }
-.names:not(:first-child){
+.names:not(:first-child):not(:last-child){
     cursor: pointer;
 }
 .display_design_cell{

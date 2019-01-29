@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import history from './history';
 import EditComponent from './EditComponent';
 import { getDesignData, words } from './core';
+import RunDisplayComponent from './RunDisplayComponent';
 import "./DisplayDesignComponent.css";
+import ButtonComponent from './ButtonComponents';
 
 export default class DisplayDesignComponent extends Component{
     constructor(props){
@@ -18,6 +20,7 @@ export default class DisplayDesignComponent extends Component{
             factorNames: {A: {name: "Temp",low: 25, high: 30}},
             edit_factor: null,
         };
+        this.data = Array(this.state.options.runs);
     }
     componentDidMount(){
         window.scrollTo(0,0);
@@ -26,35 +29,24 @@ export default class DisplayDesignComponent extends Component{
         let data = getDesignData(this.state.factors,this.state.options);
         let ddata = [];
         let available_order = [];
-        for(let i=1;i<=this.state.options.nruns;i++){
+        for(let i=1;i<=this.state.options.runs;i++){
             available_order.push(i);
         }
-        console.log("Factors:",this.state.factors,"Options:",this.state.options);
-        console.log("Data:",data);
         for(let i=0;i<data.length;i++){
-            let o = data[i];
-            let k = Object.keys(o);
-            let cfi = 0;
-            let cells = [<div key={-1} className="display_design_cell">{i+1}</div>];
+            let nord= null;
             if(this.state.options.randomize){
                 let ord = null, itg = null;
                 while(!ord){
                     itg = Math.floor(Math.random()*available_order.length);
                     ord = available_order[itg];
                 }
-                cells.push(<div key={-2} className="display_design_cell">{ord}</div>)
+                nord = ord;
+                ddata.push(<RunDisplayComponent ref={(ref) => this.data[i] = ref} key={i}data={data[i]}factorNames={this.state.factorNames} ord={nord} />);
                 delete available_order[itg];
+            }else{
+                ddata.push(<RunDisplayComponent ref={(ref) => this.data[i] = ref} key={i}data={data[i]}factorNames={this.state.factorNames} />);
             }
-            while(k.indexOf(words[cfi])>-1){
-                cells.push(<div key={cfi} className="display_design_cell">{o[words[cfi]]}</div>);
-                cfi++;
-            }
-            let fin = (
-                <div key={i} className="display_design_row">{cells}</div>
-            );
-            ddata.push(fin);
         }
-        console.log("DData:",ddata);
         return ddata;
     }
     _generate_header = () => {
@@ -74,6 +66,7 @@ export default class DisplayDesignComponent extends Component{
                 </div>
             );
         }
+        content.push(<div key={-2}className="display_design_cell names">Response</div>);
         return (
             <div className="display_design_row">
                 {content}
@@ -81,7 +74,6 @@ export default class DisplayDesignComponent extends Component{
         );
     }
     _saveFactorEditHandler = (factor,finfo) => {
-        console.log("Recived:",factor,finfo);
         let nobj = this.state.factorNames;
         nobj[factor] = finfo;
         this.setState({factorNames: nobj,edit_factor: null});
@@ -116,6 +108,7 @@ export default class DisplayDesignComponent extends Component{
                     {header}
                     {table_content}
                 </div>
+                <ButtonComponent value="REFS"onClick={() => console.log(this.data[0].response.innerText)} />
             </div>
         );
     }
