@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import history from './history';
 import EditComponent from './EditComponent';
+import { getDesignData, words } from './core';
 import "./DisplayDesignComponent.css";
 
 export default class DisplayDesignComponent extends Component{
@@ -22,54 +23,39 @@ export default class DisplayDesignComponent extends Component{
         window.scrollTo(0,0);
     }
     _generate_content = () => {
-        const sample = (n) => {
-            let r = [];
-            for(let i=0;i<n;i++){
-                r.push(-1);
-            }
-            for(let i=0;i<n;i++){
-                r.push(1);
-            }
-            return r;
-        }
-        const nruns = this.state.options.runs;
-        let content = [];
+        let data = getDesignData(this.state.factors,this.state.options);
+        let ddata = [];
         let available_order = [];
-        for(let i=1;i<=nruns;i++){
+        for(let i=1;i<=this.state.options.nruns;i++){
             available_order.push(i);
         }
-        for(let i=0;i<nruns;i++){
-            let cells = [];
-            cells.push(<div key={0}className="display_design_cell">{i+1}</div>);
+        console.log("Factors:",this.state.factors,"Options:",this.state.options);
+        console.log("Data:",data);
+        for(let i=0;i<data.length;i++){
+            let o = data[i];
+            let k = Object.keys(o);
+            let cfi = 0;
+            let cells = [<div key={-1} className="display_design_cell">{i+1}</div>];
             if(this.state.options.randomize){
                 let ord = null, itg = null;
                 while(!ord){
                     itg = Math.floor(Math.random()*available_order.length);
                     ord = available_order[itg];
                 }
-                cells.push(<div key={-1} className="display_design_cell">{ord}</div>);
+                cells.push(<div key={-2} className="display_design_cell">{ord}</div>)
                 delete available_order[itg];
             }
-            for(let j=0;j<this.state.factors-this.state.coef;j++){
-                let s = sample(2**j);
-                let next = s[i%s.length];
-                if(this.state.factorNames[words[j]]){
-                    if(next==-1){
-                        next = this.state.factorNames[words[j]].low;
-                    }else if(next==1){
-                        next = this.state.factorNames[words[j]].high;
-                    }
-                }
-                cells.push(<div key={j+1}className="display_design_cell">{next}</div>);
+            while(k.indexOf(words[cfi])>-1){
+                cells.push(<div key={cfi} className="display_design_cell">{o[words[cfi]]}</div>);
+                cfi++;
             }
             let fin = (
-                <div key={i}className="display_design_row">
-                {cells}
-                </div>
+                <div key={i} className="display_design_row">{cells}</div>
             );
-            content.push(fin);
+            ddata.push(fin);
         }
-        return content;
+        console.log("DData:",ddata);
+        return ddata;
     }
     _generate_header = () => {
         let content = [<div key={0}className="display_design_cell names">Run</div>];
@@ -134,4 +120,3 @@ export default class DisplayDesignComponent extends Component{
         );
     }
 }
-const words = "ABCDEFGHIJKLMNOPQRST";

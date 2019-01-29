@@ -29,7 +29,7 @@ export var getDesignData = (factors,options) => {
         }
         return r;
     }
-    const nruns = options.nruns;
+    const nruns = options.runs;
     let coef = factors-Math.log(nruns)/Math.log(2);
     for(let i=0;i<nruns;i++){
         let obj = {n:i};
@@ -42,4 +42,4 @@ export var getDesignData = (factors,options) => {
     }
     return data;
 }
-const words = "ABCDEFGHIJKLMNOPQRST";
+export const words = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

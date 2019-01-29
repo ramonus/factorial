@@ -6,7 +6,6 @@ import { Step1Component, NumberFactorComponent } from './StartComponent';
 import StyleDesignComponent from './StyleDesignComponent';
 import DisplayDesignComponent from './DisplayDesignComponent';
 import history from './history';
-import { getDesignData } from './core';
 import './MainComponent.css';
 
 export default class MainComponent extends Component{
