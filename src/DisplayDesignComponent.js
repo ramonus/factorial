@@ -19,11 +19,15 @@ export default class DisplayDesignComponent extends Component{
             coef: coef||0,
             factorNames: {A: {name: "Temp",low: 25, high: 30}},
             edit_factor: null,
+            ready: false,
         };
         this.data = Array(this.state.options.runs);
     }
     componentDidMount(){
         window.scrollTo(0,0);
+    }
+    _inputResponseHandler = () => {
+        this.setState({ready: this._checkAllResponses()});
     }
     _generate_content = () => {
         let data = getDesignData(this.state.factors,this.state.options);
@@ -41,11 +45,17 @@ export default class DisplayDesignComponent extends Component{
                     ord = available_order[itg];
                 }
                 nord = ord;
-                ddata.push(<RunDisplayComponent ref={(ref) => this.data[i] = ref} key={i}data={data[i]}factorNames={this.state.factorNames} ord={nord} />);
                 delete available_order[itg];
-            }else{
-                ddata.push(<RunDisplayComponent ref={(ref) => this.data[i] = ref} key={i}data={data[i]}factorNames={this.state.factorNames} />);
             }
+            ddata.push(
+                <RunDisplayComponent 
+                    ref={(ref) => this.data[i] = ref}
+                    key={i}
+                    data={data[i]}
+                    factorNames={this.state.factorNames}
+                    ord={nord}
+                    onInput={this._inputResponseHandler.bind(this)}/>
+                );
         }
         return ddata;
     }
@@ -81,6 +91,16 @@ export default class DisplayDesignComponent extends Component{
     _editFactorHandler = (fi) => {
         this.setState({edit_factor:fi+1});
     }
+    _checkAllResponses = () => {
+        for(let i=0;i<this.data.length;i++){
+            if(this.data[i]){
+                if(!this.data[i].state.data.response){
+                    return false; 
+                }
+            }
+        }
+        return true;
+    }
     render(){
         let table_content = this._generate_content();
         let header = this._generate_header();
@@ -104,11 +124,13 @@ export default class DisplayDesignComponent extends Component{
                     Design<br/>
                     2^{this.state.coef!=0?"("+this.state.factors+"-"+this.state.coef+")":this.state.factors}
                 </div>
+                {
+                    this.state.ready?<ButtonComponent value="Analyze" />:null
+                }
                 <div className="display_design_table">
                     {header}
                     {table_content}
                 </div>
-                <ButtonComponent value="REFS"onClick={() => console.log(this.data[0].response.innerText)} />
             </div>
         );
     }

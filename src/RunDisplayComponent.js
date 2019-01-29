@@ -4,15 +4,24 @@ import {words} from './core';
 export default class RunDisplayComponent extends Component{
     constructor(props){
         super(props);
+        let {data, ord, factorNames} = props;
+        if(ord){
+            data.ord = ord;
+        }
         this.state = {
-            data: props.data,
-            ord: props.ord,
-            factorNames: this.props.factorNames||{},
+            data,
+            ord,
+            factorNames: factorNames||{},
         };
-        this.response = React.createRef();
     }
-    _getResponse = () => {
-        console.log("Response:",this.response.innerHTML);
+    _inputHandler = (e) => {
+        let obj = this.state.data;
+        obj.response = e.target.innerText;
+        this.setState({data: obj}, () => {
+            if(this.props.onInput){
+                this.props.onInput(obj.response);
+            }
+        });
     }
     _generateCells = () => {
         let cells = [<div key={-1}className="display_design_cell">{this.state.data.n+1}</div>];
@@ -33,10 +42,10 @@ export default class RunDisplayComponent extends Component{
         }
         cells.push(
             <div
-                ref={(ref) => this.response = ref}
                 key={cfi}
                 className="display_design_cell response_cell"
-                contentEditable={true}>
+                contentEditable={true}
+                onInput={this._inputHandler.bind(this)}>
             </div>
         );        
         return cells;
