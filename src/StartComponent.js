@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import "./StartComponent.css";
 import ButtonComponent from "./ButtonComponents";
-import StyleDesignComponent from './StyleDesignComponent';
-import DisplayDesignComponent from "./DisplayDesignComponent";
 import { Link } from 'react-router-dom';
 export class Step1Component extends Component{
     render(){

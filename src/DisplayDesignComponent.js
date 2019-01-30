@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import history from './history';
 import EditComponent from './EditComponent';
-import { getDesignData, words } from './core';
+import { getDesignData, calc_main_effects, words } from './core';
 import RunDisplayComponent from './RunDisplayComponent';
 import "./DisplayDesignComponent.css";
 import ButtonComponent from './ButtonComponents';
@@ -17,7 +17,7 @@ export default class DisplayDesignComponent extends Component{
             options: this.props.options||{runs:0,resolution:"full"},
             factors: this.props.factors||0,
             coef: coef||0,
-            factorNames: {A: {name: "Temp",low: 25, high: 30}},
+            factorNames: {},
             edit_factor: null,
             ready: false,
         };
@@ -101,6 +101,14 @@ export default class DisplayDesignComponent extends Component{
         }
         return true;
     }
+    _analyzeDesignHandler = () => {
+        let dobj = Array(this.data.length);
+        for(let i=0;i<dobj.length;i++){
+            dobj[i]=this.data[i].state.data;
+        }
+        const effects = calc_main_effects(dobj);
+        console.log("Effects:",effects);
+    }
     render(){
         let table_content = this._generate_content();
         let header = this._generate_header();
@@ -113,7 +121,6 @@ export default class DisplayDesignComponent extends Component{
                     onClick={this._saveFactorEditHandler.bind(this)} 
                     onCancel={() => {
                         this.setState({edit_factor: null});
-                        
                 }}/>
             );
         }
@@ -125,7 +132,7 @@ export default class DisplayDesignComponent extends Component{
                     2^{this.state.coef!=0?"("+this.state.factors+"-"+this.state.coef+")":this.state.factors}
                 </div>
                 {
-                    this.state.ready?<ButtonComponent value="Analyze" />:null
+                    this.state.ready?<ButtonComponent value="Analyze" onClick={this._analyzeDesignHandler.bind(this)}/>:null
                 }
                 <div className="display_design_table">
                     {header}

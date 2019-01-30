@@ -42,4 +42,20 @@ export var getDesignData = (factors,options) => {
     }
     return data;
 }
+export var calc_main_effects = (data) => {
+    let effects = {};
+    for(let i=0;i<data.length;i++){
+        let d = data[i];
+        let cfi = 0;
+        const k = Object.keys(d);
+        while(k.indexOf(words[cfi])>-1){
+            if(!effects[words[cfi]]){
+                effects[words[cfi]] = 0;
+            }
+            effects[words[cfi]] += parseInt(""+d[words[cfi]])*parseFloat(""+d.response)/4;
+            cfi++;
+        }
+    }
+    return effects;
+}
 export const words = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
