@@ -1,11 +1,13 @@
+
+const words = "ABCDEFGHJKLMNOPQRST";
 class Patron{
     constructor(gen){
         this.input_generators = null;
         if(Array.isArray(gen)){
             //if it is an array of generators
-            this.input_generators = gen;
-        }else{
-            this.input_generators = [gen];
+            this.input_generators = gen.map(el => el.toUpperCase());
+        }else if(typeof gen==='string'){
+            this.input_generators = [gen.toUpperCase()];
         }
         this.relation_definition = this._def_rel();
     }
@@ -23,7 +25,52 @@ class Patron{
             //I=ab
             relation_definition.push(simplify(a+b));
         }
+        let all_rel = simplify(relation_definition.join(""));
+        if(relation_definition.indexOf(all_rel)==-1){
+            relation_definition.push(all_rel);
+        }
         return relation_definition;
+    }
+    _get_max_factor(){
+        let max_factor = "A";
+        for(let i=0;i<this.relation_definition.length;i++){
+            let gen = this.relation_definition[i];
+            for(let j=0;j<gen.length;j++){
+                if(words.indexOf(gen[j])>words.indexOf(max_factor)){
+                    max_factor = gen[j];
+                }
+            }
+        }
+        return max_factor;
+    }
+    resolution(){
+        return Math.min(...this.relation_definition.map(it=>it.length));
+    }
+    _main_confusions(){
+        let main_confusions = [];
+        const max_factor = this._get_max_factor();
+        let curr_factor = "A";
+        while(words.indexOf(curr_factor)<=words.indexOf(max_factor)){
+            let confusions = this._confusions(curr_factor);
+            if(confusions){
+                main_confusions.push(confusions);
+            }
+            curr_factor = words[words.indexOf(curr_factor)+1];
+        }
+        return main_confusions;
+    }
+    _confusions(facts){
+        let confusions = [simplify(facts)];
+        for(let i=0;i<this.relation_definition.length;i++){
+            let confu = simplify(facts+this.relation_definition[i]);
+            if(confu.indexOf(facts)==-1){
+                confusions.push(confu);
+            }
+        }
+        if(confusions.length>1){
+            return confusions;
+        }
+        return null;
     }
 }
 const simplify = (s) => {
@@ -68,6 +115,14 @@ const simplify = (s) => {
     return fs;
 }
 
-var p = new Patron(["D=AB","E=AC"]);
-console.log("Relació de definició:",p.relation_definition_str());
+var p = new Patron([
+    "F=ABC",
+    "G=ADE",
+]);
+console.log("Relació de definició:","\n\t"+p.relation_definition_str());
+console.log("Resolució:",p.resolution());
+console.log("Confusions:");
+p._main_confusions().forEach(it => {
+    console.log("\t"+it.join("+"));
+});
 // simplify("abdsbade");
