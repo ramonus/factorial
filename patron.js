@@ -73,7 +73,7 @@ class Patron{
         while(words.indexOf(curr_factor)<=words.indexOf(max_factor)){
             let confusions = this._confusions(curr_factor);
             let ci = this.depending_factors.indexOf(confusions[0]);
-            if(confusions!=null&ci==-1){
+            if(confusions!=null){
                 main_confusions.push(confusions);
             }
             curr_factor = words[words.indexOf(curr_factor)+1];
@@ -83,12 +83,22 @@ class Patron{
 
     _two_factor_confusions(){
         let tfconfusions = [];
-        const str = words.slice(0,Math.min(...this.depending_factors.map(e=>words.indexOf(e))));
+        let terms = []
+        const str = words.slice(0,Math.max(...this.depending_factors.map(e=>words.indexOf(e)))+1);
         const combinations = this._combinations(str);
         for(let i=0;i<combinations.length;i++){
             let confusions = this._confusions(combinations[i]);
-
-            tfconfusions.push(confusions);
+            let validated = true;
+            for(let j=0;j<confusions.length;j++){
+                if(confusions[j].length==1|terms.indexOf(confusions[j])>-1){
+                    validated = false;
+                    break;
+                }
+            }
+            if(validated){
+                terms.push(...confusions);
+                tfconfusions.push(confusions);
+            }
         }
         return tfconfusions;
     }
@@ -105,12 +115,12 @@ class Patron{
         let confusions = [simplify(facts)];
         for(let i=0;i<this.relation_definition.length;i++){
             let confu = simplify(facts+this.relation_definition[i]);
-            if(!this._contains_factors(confu,facts)){
+            // if(!this._contains_factors(confu,facts)){
                 confusions.push(confu);
-            }
+            // }
         }
         if(confusions.length>1){
-            return confusions;
+            return confusions.sort((a,b) => a.length-b.length);
         }
         return null;
     }
@@ -158,15 +168,15 @@ const simplify = (s) => {
 }
 
 var p = new Patron([
-    "F=ABC",
-    "G=ADE",
+    "E=ABCD",
 ]);
 console.log("Relació de definició:","\n\t"+p.relation_definition_str());
 console.log("Resolució:",p.resolution());
-console.log("Confusions:");
+console.log("Confusions principals:");
 p._main_confusions().forEach(it => {
     console.log("\t"+it.join("+"));
 });
+console.log("Confusions de segon ordre:");
 p._two_factor_confusions().forEach(it => {
     console.log("\t"+it.join("+"));
 });
